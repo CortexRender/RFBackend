@@ -4,7 +4,7 @@ This repository contains the backend implementation for our Render Farm project.
 ## Environment Setup
 ### **1. Prerequisites**
 Ensure you have the following installed:
-- Python 3.11
+- Python 3.9
 - pip (Python package manager)
 - SQLite
 
@@ -16,12 +16,18 @@ git clone <repository-url>
 cd <repository-folder>
 ```
 
-#### **Step 2: Install dependencies**
+#### **Step 2: Create a virtual environment**
+```bash
+python -m venv env
+source env/bin/activate # On Windows: env\Scripts\activate
+```
+
+#### **Step 3: Install dependencies**
 ```bash
 pip install -r requirements.txt
 ```
 
-#### **Step 3: Create a `.env` file**
+#### **Step 4: Create a `.env` file**
 Create a `.env` file in the root directory (same level as `manage.py`) to store environment-specific configurations. Below is an example of what your `.env` file should look like:
 
 ```env
@@ -39,19 +45,19 @@ EMAIL_HOST_PASSWORD=email_password
 ```
 For the secret keys and passwords, ask developers for help.
 
-#### **Step 4: Apply database migrations**
+#### **Step 5: Apply database migrations**
 Run the following commands to apply migrations:
 ```bash
 python manage.py makemigrations
 python manage.py migrate
 ```
 
-#### **Step 5: Create a superuser**
+#### **Step 6: Create a superuser**
 ```bash
 python manage.py createsuperuser
 ```
 
-#### **Step 6: Start the development server**
+#### **Step 7: Start the development server**
 ```bash
 python manage.py runserver
 ```
