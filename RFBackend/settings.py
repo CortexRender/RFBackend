@@ -37,6 +37,10 @@ ALLOWED_HOSTS = [
     '172.31.12.16'
 ]
 
+# Proxy settings
+USE_X_FORWARDED_HOST = True
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -53,6 +57,12 @@ INSTALLED_APPS = [
 ]
 
 CORS_ORIGIN_ALLOW_ALL = True
+
+# Add CSRF trusted origins setting
+CSRF_TRUSTED_ORIGINS = [
+    'http://envbackend.eba-7iei6ccj.us-west-2.elasticbeanstalk.com',
+    'https://envbackend.eba-7iei6ccj.us-west-2.elasticbeanstalk.com',
+]
 
 AUTH_USER_MODEL = 'users.RFUser'
 
