@@ -33,7 +33,8 @@ ALLOWED_HOSTS = [
     'localhost',
     '.elasticbeanstalk.com',
     '.amazonaws.com',
-    '172.31.12.16'
+    '172.31.1.114',
+    
 ]
 
 # Proxy settings
