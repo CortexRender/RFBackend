@@ -25,7 +25,21 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "django-insecure-&wqn*+@4^p^&tvvi#6#-+4^s9%@itn9v4zhn395ib@ip25n18n"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+        },
+    },
+    'root': {
+        'handlers': ['console'],
+        'level': 'DEBUG',
+    },
+}
 
 ALLOWED_HOSTS = [
     'backend-env.eba-sjvwxrcp.us-west-2.elasticbeanstalk.com',
