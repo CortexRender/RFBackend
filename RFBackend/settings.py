@@ -92,7 +92,16 @@ MIDDLEWARE = [
 ]
 
 CORS_ALLOWED_ORIGINS = [
-    "https://main.d3c81w61pqv4dl.amplifyapp.com/",
+    "https://main.d3c81w61pqv4dl.amplifyapp.com",
+]
+
+CORS_ALLOW_METHODS = [
+    "GET",
+    "POST",
+    "OPTIONS",
+    "PUT",
+    "PATCH",
+    "DELETE",
 ]
 
 REST_FRAMEWORK = {
