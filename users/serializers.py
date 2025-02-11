@@ -21,15 +21,18 @@ class RegisterSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         is_superuser = validated_data.pop('is_superuser', False)
-        if not is_superuser and 'password' not in validated_data:
-            raise serializers.ValidationError("Password is required.")
+        password = validated_data.pop('password', None)
+
+        if not is_superuser and not password:
+            raise serializers.ValidationError({"password": "Password is required."})
+
         user = RFUser.objects.create(
             **validated_data,
             is_superuser=is_superuser,
             is_staff=is_superuser,
         )
-        if not is_superuser and 'password' in validated_data:
-            user.set_password(validated_data['password'])
+        if password:
+            user.set_password(password)
 
         user.save()
         return user

@@ -15,6 +15,7 @@ from rest_framework.views import APIView
 from rest_framework_simplejwt.tokens import RefreshToken
 from django.http import HttpResponse
 
+from utils.response import RFResponse
 from .models import RFUser
 from .serializers import UserSerializer, RegisterSerializer
 
@@ -24,8 +25,10 @@ class RegisterView(APIView):
         serializer = RegisterSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            return RFResponse(code=201, message='User registered successfully.', data=serializer.data,
+                              status=status.HTTP_201_CREATED)
+        return RFResponse(code=400, message='Validation failed.', errors=serializer.errors,
+                          status=status.HTTP_400_BAD_REQUEST)
 
 
 class LoginView(APIView):
@@ -36,11 +39,14 @@ class LoginView(APIView):
 
         if user and user.check_password(password):
             refresh = RefreshToken.for_user(user)
-            return Response({
+            tokens = {
                 'refresh': str(refresh),
                 'access': str(refresh.access_token),
-            })
-        return Response({'error': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
+            }
+            return RFResponse(code=200, message='Login successful.', data=tokens, status=status.HTTP_200_OK)
+        return RFResponse(code=401, message='Invalid credentials.',
+                          errors={'error': 'Invalid username or password.'},
+                          status=status.HTTP_401_UNAUTHORIZED)
 
 
 class UserInfoView(APIView):
@@ -48,19 +54,22 @@ class UserInfoView(APIView):
 
     def get(self, request):
         serializer = UserSerializer(request.user)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+        return RFResponse(code=200, message='User information retrieved.', data=serializer.data,
+                          status=status.HTTP_200_OK)
 
 
 class RequestPasswordResetView(APIView):
     def post(self, request):
         email = request.data.get('email')
         if not email:
-            return Response({'error': 'Email is required.'}, status=status.HTTP_400_BAD_REQUEST)
+            return RFResponse(code=400, message='Email is required.', errors={'email': 'This field is required.'},
+                              status=status.HTTP_400_BAD_REQUEST)
 
         try:
             user = RFUser.objects.get(email=email)
         except RFUser.DoesNotExist:
-            return Response({'error': 'The email has not been registered or the user does not exist.'}, status=404)
+            return RFResponse(code=404, message='User not found.',
+                              errors={'email': 'The email has not been registered.'}, status=status.HTTP_404_NOT_FOUND)
 
         username = user.username
 
@@ -86,32 +95,38 @@ class RequestPasswordResetView(APIView):
             fail_silently=False,
         )
 
-        return Response({'success': 'Password reset link sent.'}, status=status.HTTP_200_OK)
+        return RFResponse(code=200, message='Password reset link sent.', data={'email': email},
+                          status=status.HTTP_200_OK)
 
 
 class PasswordResetConfirmView(APIView):
     def post(self, request, uidb64, token):
         new_password = request.data.get('password')
         if not new_password:
-            return Response({'error': 'Password is required.'}, status=status.HTTP_400_BAD_REQUEST)
+            return RFResponse(code=400, message='Password is required.', errors={'password': 'This field is required.'},
+                              status=status.HTTP_400_BAD_REQUEST)
 
         try:
             uid = urlsafe_base64_decode(uidb64).decode()
             user = RFUser.objects.get(pk=uid)
         except (TypeError, ValueError, OverflowError, User.DoesNotExist):
-            return Response({'error': 'Invalid user.'}, status=status.HTTP_400_BAD_REQUEST)
+            return RFResponse(code=400, message='Invalid user.', errors={'user': 'User does not exist.'},
+                              status=status.HTTP_400_BAD_REQUEST)
 
         if not default_token_generator.check_token(user, token):
-            return Response({'error': 'Invalid token.'}, status=status.HTTP_400_BAD_REQUEST)
+            return RFResponse(code=400, message='Invalid token.',
+                              errors={'token': 'The reset token is invalid or has expired.'},
+                              status=status.HTTP_400_BAD_REQUEST)
 
         user.password = make_password(new_password)
         user.save()
 
-        return Response({'success': 'Password has been reset successfully.'}, status=status.HTTP_200_OK)
-    
+        return RFResponse(code=200, message='Password has been reset successfully.', status=status.HTTP_200_OK)
+
 
 class HealthCheckView(APIView):
     permission_classes = []  # No authentication required
-    
+
     def get(self, request):
-        return Response({"status": "healthy"}, status=status.HTTP_200_OK)
+        return RFResponse(code=200, message='Service is healthy.', data={'status': 'healthy'},
+                          status=status.HTTP_200_OK)
