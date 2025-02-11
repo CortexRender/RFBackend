@@ -81,14 +81,14 @@ CSRF_TRUSTED_ORIGINS = [
 AUTH_USER_MODEL = 'users.RFUser'
 
 MIDDLEWARE = [
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
-    "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    "corsheaders.middleware.CorsMiddleware",
+    "django.middleware.clickjacking.XFrameOptionsMiddleware", 
 ]
 
 CORS_ALLOWED_ORIGINS = [
@@ -103,6 +103,16 @@ CORS_ALLOW_METHODS = [
     "PATCH",
     "DELETE",
 ]
+
+CORS_ALLOW_HEADERS = [
+    "Content-Type",
+    "Authorization",
+]
+
+CORS_ALLOW_CREDENTIALS = True
+
+SESSION_COOKIE_SAMESITE = "None"  # ✅ Required for cross-origin cookies
+SESSION_COOKIE_SECURE = True  # ✅ Required for HTTPS
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
