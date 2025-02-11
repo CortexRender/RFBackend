@@ -13,6 +13,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework_simplejwt.tokens import RefreshToken
+from django.http import HttpResponse
 
 from .models import RFUser
 from .serializers import UserSerializer, RegisterSerializer
@@ -107,3 +108,10 @@ class PasswordResetConfirmView(APIView):
         user.save()
 
         return Response({'success': 'Password has been reset successfully.'}, status=status.HTTP_200_OK)
+    
+
+class HealthCheckView(APIView):
+    permission_classes = []  # No authentication required
+    
+    def get(self, request):
+        return Response({"status": "healthy"}, status=status.HTTP_200_OK)

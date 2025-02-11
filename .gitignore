@@ -170,3 +170,9 @@ cython_debug/
 
 # PyPI configuration file
 .pypirc
+
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml
+/static/

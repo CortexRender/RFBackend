@@ -27,7 +27,33 @@ SECRET_KEY = "django-insecure-&wqn*+@4^p^&tvvi#6#-+4^s9%@itn9v4zhn395ib@ip25n18n
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+        },
+    },
+    'root': {
+        'handlers': ['console'],
+        'level': 'DEBUG',
+    },
+}
+
+ALLOWED_HOSTS = [
+    'backend-env.eba-sjvwxrcp.us-west-2.elasticbeanstalk.com',
+    '127.0.0.1',
+    'localhost',
+    '.elasticbeanstalk.com',
+    '.amazonaws.com',
+    '172.31.1.114',
+    
+]
+
+# Proxy settings
+USE_X_FORWARDED_HOST = True
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 # Application definition
 
@@ -46,6 +72,12 @@ INSTALLED_APPS = [
 
 CORS_ORIGIN_ALLOW_ALL = True
 
+# Add CSRF trusted origins setting
+CSRF_TRUSTED_ORIGINS = [
+    'http://envbackend.eba-7iei6ccj.us-west-2.elasticbeanstalk.com',
+    'https://envbackend.eba-7iei6ccj.us-west-2.elasticbeanstalk.com',
+]
+
 AUTH_USER_MODEL = 'users.RFUser'
 
 MIDDLEWARE = [
@@ -57,6 +89,10 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "corsheaders.middleware.CorsMiddleware",
+]
+
+CORS_ALLOWED_ORIGINS = [
+    "https://main.d3c81w61pqv4dl.amplifyapp.com/",
 ]
 
 REST_FRAMEWORK = {
@@ -148,7 +184,29 @@ USE_TZ = True
 
 STATIC_URL = "static/"
 
+STATIC_ROOT = 'static'
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+# LOGGING = {
+#     'version': 1,
+#     'disable_existing_loggers': False,
+#     'handlers': {
+#         'file': {
+#             'level': 'ERROR',
+#             'class': 'logging.FileHandler',
+#             'filename': '/var/log/django-error.log',
+#         },
+#     },
+#     'loggers': {
+#         'django': {
+#             'handlers': ['file'],
+#             'level': 'ERROR',
+#             'propagate': True,
+#         },
+#     },
+# }
+
