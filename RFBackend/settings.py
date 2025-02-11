@@ -42,6 +42,7 @@ LOGGING = {
 }
 
 ALLOWED_HOSTS = [
+    'd2w7u0oml38ixb.cloudfront.net',
     'backend-env.eba-sjvwxrcp.us-west-2.elasticbeanstalk.com',
     '127.0.0.1',
     'localhost',
