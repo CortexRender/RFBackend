@@ -76,10 +76,12 @@ class RequestPasswordResetView(APIView):
         token = default_token_generator.make_token(user)
         uid = urlsafe_base64_encode(force_bytes(user.pk))
 
-        reset_url = f"{request.scheme}://{request.get_host()}{reverse('password-reset-confirm', kwargs={'uidb64': uid, 'token': token})}"
+        # reset_url = f"{request.scheme}://{request.get_host()}{reverse('password-reset-confirm', kwargs={'uidb64': uid, 'token': token})}"
 
         # separate React frontend URL:
         # reset_url = f"https://your-frontend.com/reset-password/{uid}/{token}"
+        reset_url = f"{settings.FRONTEND_URL}/reset-password/{uid}/{token}"
+
 
         email_body = render_to_string('email_templates/password_reset_email.html', {
             'reset_url': reset_url,
