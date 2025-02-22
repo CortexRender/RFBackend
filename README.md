@@ -42,6 +42,12 @@ EMAIL_PORT=587
 EMAIL_USE_TLS=True
 EMAIL_HOST_USER=email@gmail.com
 EMAIL_HOST_PASSWORD=email_password
+
+DB_NAME=render_farm
+DB_USER=db_user
+DB_PASSWORD=db_user_password
+DB_HOST=localhost or RDS
+DB_PORT=5432
 ```
 For the secret keys and passwords, ask developers for help.
 

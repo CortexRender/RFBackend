@@ -162,9 +162,13 @@ WSGI_APPLICATION = "RFBackend.wsgi.application"
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        'NAME': os.path.join('/mnt/', 'db.sqlite3'),
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': config('DB_NAME', 'default_db_name'),
+        'USER': config('DB_USER', 'default_user'),
+        'PASSWORD': config('DB_PASSWORD', 'default_password'),
+        'HOST': config('DB_HOST', 'localhost'),
+        'PORT': config('DB_PORT', '5432'),
     }
 }
 
