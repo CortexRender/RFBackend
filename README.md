@@ -4,9 +4,10 @@ This repository contains the backend implementation for our Render Farm project.
 ## Environment Setup
 ### **1. Prerequisites**
 Ensure you have the following installed:
-- Python 3.9
+- Python 3.13
 - pip (Python package manager)
-- SQLite
+- PostgreSQL 14+ (for database)
+- `psycopg2` or `psycopg` (PostgreSQL driver for Python)
 
 ### **2. Runtime Setup**
 
