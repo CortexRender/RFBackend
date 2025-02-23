@@ -29,7 +29,7 @@ pip install -r requirements.txt
 ```
 
 #### **Step 4: Create a `.env` file**
-Create a `.env` file in the root directory (same level as `manage.py`) to store environment-specific configurations. Below is an example of what your `.env` file should look like:
+Create a `.env` file in the root directory (same level as `manage.py`) to store environment-specific configurations then export the environment variables all. Below is an example of what your `.env` file should look like:
 
 ```env
 # Django settings
