@@ -4,18 +4,15 @@ from django.contrib.auth.models import User
 from django.contrib.auth.tokens import default_token_generator
 from django.core.mail import send_mail
 from django.template.loader import render_to_string
-from django.urls import reverse
 from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_decode
 from django.utils.http import urlsafe_base64_encode
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
-from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework_simplejwt.tokens import RefreshToken
-from django.http import HttpResponse
 
-from utils.response import RFResponse
+from utils.response import RFResponse, ResponseCodes
 from .models import RFUser
 from .serializers import UserSerializer, RegisterSerializer
 
@@ -53,8 +50,14 @@ class UserInfoView(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
+        if not request.user.is_authenticated:
+            return RFResponse(
+                code=ResponseCodes.UNAUTHORIZED,
+                message="User is not authenticated.",
+                status=status.HTTP_401_UNAUTHORIZED
+            )
         serializer = UserSerializer(request.user)
-        return RFResponse(code=200, message='User information retrieved.', data=serializer.data,
+        return RFResponse(code=ResponseCodes.SUCCESS, message='User information retrieved.', data=serializer.data,
                           status=status.HTTP_200_OK)
 
 
