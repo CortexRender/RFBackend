@@ -49,6 +49,8 @@ DB_USER=db_user
 DB_PASSWORD=db_user_password
 DB_HOST=localhost or RDS
 DB_PORT=5432
+
+FRONTEND_URL=https://main.d3c81w61pqv4dl.amplifyapp.com/
 ```
 For the secret keys and passwords, ask developers for help.
 
