@@ -14,6 +14,7 @@ from pathlib import Path
 from datetime import timedelta
 from decouple import config
 from django.urls import reverse_lazy
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -49,7 +50,6 @@ ALLOWED_HOSTS = [
     '.elasticbeanstalk.com',
     '.amazonaws.com',
     '172.31.1.114',
-    
 ]
 
 FRONTEND_URL = config('FRONTEND_URL')
@@ -162,9 +162,13 @@ WSGI_APPLICATION = "RFBackend.wsgi.application"
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': config('DB_NAME', 'default_db_name'),
+        'USER': config('DB_USER', 'default_user'),
+        'PASSWORD': config('DB_PASSWORD', 'default_password'),
+        'HOST': config('DB_HOST', 'localhost'),
+        'PORT': config('DB_PORT', '5432'),
     }
 }
 
