@@ -42,6 +42,11 @@ EMAIL_PORT=587
 EMAIL_USE_TLS=True
 EMAIL_HOST_USER=email@gmail.com
 EMAIL_HOST_PASSWORD=email_password
+
+AWS_ACCESS_KEY_ID=aws_access_key_id
+AWS_SECRET_ACCESS_KEY=aws_secret_access_key
+AWS_STORAGE_BUCKET_NAME=s3_bucket_name
+AWS_S3_REGION_NAME=region
 ```
 For the secret keys and passwords, ask developers for help.
 
