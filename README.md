@@ -4,9 +4,10 @@ This repository contains the backend implementation for our Render Farm project.
 ## Environment Setup
 ### **1. Prerequisites**
 Ensure you have the following installed:
-- Python 3.9
+- Python 3.13
 - pip (Python package manager)
-- SQLite
+- PostgreSQL 14+ (for database)
+- `psycopg2` or `psycopg` (PostgreSQL driver for Python)
 
 ### **2. Runtime Setup**
 
@@ -28,7 +29,7 @@ pip install -r requirements.txt
 ```
 
 #### **Step 4: Create a `.env` file**
-Create a `.env` file in the root directory (same level as `manage.py`) to store environment-specific configurations. Below is an example of what your `.env` file should look like:
+Create a `.env` file in the root directory (same level as `manage.py`) to store environment-specific configurations then export the environment variables all. Below is an example of what your `.env` file should look like:
 
 ```env
 # Django settings
@@ -47,6 +48,15 @@ AWS_ACCESS_KEY_ID=aws_access_key_id
 AWS_SECRET_ACCESS_KEY=aws_secret_access_key
 AWS_STORAGE_BUCKET_NAME=s3_bucket_name
 AWS_S3_REGION_NAME=region
+
+DB_NAME=render_farm
+DB_USER=db_user
+DB_PASSWORD=db_user_password
+DB_HOST=localhost or RDS
+DB_PORT=5432
+
+FRONTEND_URL=https://main.d3c81w61pqv4dl.amplifyapp.com/
+
 ```
 For the secret keys and passwords, ask developers for help.
 
