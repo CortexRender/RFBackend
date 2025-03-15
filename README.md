@@ -44,6 +44,11 @@ EMAIL_USE_TLS=True
 EMAIL_HOST_USER=email@gmail.com
 EMAIL_HOST_PASSWORD=email_password
 
+AWS_ACCESS_KEY_ID=aws_access_key_id
+AWS_SECRET_ACCESS_KEY=aws_secret_access_key
+AWS_STORAGE_BUCKET_NAME=s3_bucket_name
+AWS_S3_REGION_NAME=region
+
 DB_NAME=render_farm
 DB_USER=db_user
 DB_PASSWORD=db_user_password
@@ -51,6 +56,7 @@ DB_HOST=localhost or RDS
 DB_PORT=5432
 
 FRONTEND_URL=https://main.d3c81w61pqv4dl.amplifyapp.com/
+
 ```
 For the secret keys and passwords, ask developers for help.
 

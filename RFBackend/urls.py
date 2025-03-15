@@ -22,5 +22,6 @@ from users.views import HealthCheckView
 urlpatterns = [
     path("admin/", admin.site.urls),
     path('api/users/', include('users.urls')),
+    path("api/blender/", include("blender.urls")),
     path('', HealthCheckView.as_view(), name='health-check'),
 ]
